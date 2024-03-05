@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.domain.Representation;
+import com.example.demo.log.LogExecutionTime;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,7 +16,9 @@ public class GreetingController {
 
 
     @GetMapping("/greeting")
-    public Representation representation(@RequestParam(value = "name", defaultValue = "World") String name){
+    @LogExecutionTime
+    public Representation representation(@RequestParam(value = "name", defaultValue = "World") String name) throws InterruptedException {
+        Thread.sleep(500);
         return new Representation(counter.incrementAndGet(), String.format(template, name));
     }
 }
